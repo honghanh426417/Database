@@ -1,0 +1,11 @@
+CREATE DATABASE Aptech
+GO
+USE Aptech
+GO
+CREATE TABLE Classes(
+    ClassName CHAR(6),
+    Teacher VARCHAR(30),
+    TimeSlot VARCHAR(30),
+    Class INT,
+    Lab INT
+);

@@ -1,0 +1,15 @@
+CREATE DATABASE Lab11
+GO
+USE lab11
+CREATE VIEW ProductList
+AS
+     SELECT product_id, product_name FROM FptAptechBikeStore.production.products
+SELECT * FROM ProductList
+
+CREATE VIEW SaleOrderDetail
+AS
+     SELECT p.product_id, p.product_name, sl.list_price, sl.quantity, sl.list_price*sl.quantity as [Total Price]
+     FROM FptAptechBikeStore.sales.order_items sl 
+     JOIN FptAptechBikeStore.production.products p
+     ON sl.product_id=p.product_id
+SELECT * FROM SaleOrderDetail

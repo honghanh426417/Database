@@ -1,0 +1,72 @@
+CREATE DATABASE BookSale
+GO
+USE BookSale
+CREATE TABLE Customer(
+    CustomerID INT PRIMARY KEY,
+    CustomerName VARCHAR(50),
+    Address VARCHAR(100),
+    Phone VARCHAR(12)
+);
+CREATE TABLE Book(
+    BookCode INT,
+    Category VARCHAR(50), -- the loai
+    Author VARCHAR(50),-- tac gia
+    Publisher VARCHAR(50),-- nha xuat ban
+    Title VARCHAR(100),
+    Price INT,
+    InStore INT
+);
+CREATE TABLE BookSold(
+    BookSoldID INT,
+    CustomerID INT,
+    BookCode INT,
+    Date DATETIME,
+    Price INT,-- gia tai thoi diem ban
+    Amount INT -- so luong sach da ban
+);
+
+INSERT INTO Customer (CustomerID,CustomerName, Address, Phone)
+VALUES ('1', 'Jane', 'Mascow', '749376'),
+       ('2', 'Bones', 'Phaha', '926583'),
+       ('3', 'Holaw', 'Hawai', '940375'),
+       ('4', 'Mesew', 'Busan', '365828'),
+       ('5', 'Ketta', 'Mascow', '758439');
+INSERT INTO Book (BookCode, Category, Author, Publisher, Title, Price, InStore)
+VALUES ('401','Math', 'Mense', 'BBC', 'Hongcobiet', '12300', '200'),
+       ('402','Economic', 'Hesk', 'HOK', 'Hongconho', '6554', '10'),
+       ('403','Graph', 'Bujk', 'BBC', 'Uagizay', '9300', '22'),
+       ('404','Tech', 'Meju', 'MK', 'Lasaonhi', '10890', '15'),
+       ('405','Geograph', 'Dta', 'HV', 'Thactuyt', '6000', '117');
+       
+INSERT INTO BookSold (BookSoldID, CustomerID, BookCode, Date, Price, Amount)
+VALUES ('41','1', '401', '7/1/2022', '12300', '25' ),
+       ('42','2', '402', '7/1/2022', '6000', '300' ),
+       ('43','3', '403', '8/1/2022', '9500', '120'),
+       ('44','4', '404', '8/1/2022', '10900', '60'),
+       ('45','5', '405', '8/1/2022', '6500', '10');
+
+CREATE VIEW BookOrder
+AS
+   SELECT b.BookCode, b.Title, bs.Price, bs.Amount
+   FROM Book b 
+   JOIN BookSold bs 
+   ON bs.BookCode = b.BookCode
+SELECT * FROM BookOrder
+
+CREATE VIEW CustomerOrder
+AS 
+   SELECT c.CustomerID, c.CustomerName, c.Address, bs.Amount
+   FROM Customer c 
+   JOIN BookSold bs 
+   ON bs.CustomerID = c.CustomerID
+   SELECT * FROM CustomerOrder
+
+CREATE VIEW CustomerOrderBook
+AS 
+   SELECT c.CustomerID, c.CustomerName, c.Address, bs.Amount, b.Title
+   FROM Customer c 
+   JOIN BookSold bs 
+   JOIN Book b
+   ON bs.CustomerID = c.CustomerID
+   ON bs.BookCode = b.BookCode
+SELECT * FROM CustomerOrderBook

@@ -1,0 +1,10 @@
+CREATE DATABASE DonHang
+GO
+USe DonHang
+CREATE TABLE (
+    OrderID INT,
+    Customer VARCHAR(50),
+    Address VARCHAR(100),
+    Phone VARCHAR(15),
+    Date DATETIME
+);

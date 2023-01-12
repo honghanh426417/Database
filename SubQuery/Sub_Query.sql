@@ -73,3 +73,27 @@ ALTER TABLE Course_Grades DROP CONSTRAINT SID_CG_FK;
 <<OR>>
 ALTER TABLE Course_Grades DROP INDEX SID_CG_FK;
 
+SELECT * FROM Student JOIN Course_Grades on SID = SID_CG
+WHERE Grade = (SELECT min(Grade) FROM Course_Grades);
+
+SELECT * FROM Student JOIN Course_Grades on SID = SID_CG
+WHERE Grade IN  (SELECT min(Grade) FROM Course_Grades)
+
+SELECT * FROM Student JOIN Course_Grades on SID = SID_CG
+WHERE Grade = ANY  (SELECT min(Grade) FROM Course_Grades)
+
+
+SELECT S_FName, S_LName, CourseName, Grade, Semester
+FROM Course_Grades JOIN Course on CID = CID_CG
+                   JOIN Student on SID = SID_CG
+
+SELECT * FROM Student JOIN Course_Grades on SID = SID_CG WHERE Semester = 'Semester'
+
+SELECT * from Course_Grades JOIN Student on SID = SID_CG
+                            JOIN Course on CID = CID_CG
+     where CourseName = 'MKT'
+
+SELECT * FROM Student JOIN Course_Grades on SID = SID_CG WHERE Grade >= 'C'
+
+SELECT * FROM Student JOIN Course_Grades on SID = SID_CG WHERE Grade = (SELECT AVG(Grade) FROM Course_Grades);
+
